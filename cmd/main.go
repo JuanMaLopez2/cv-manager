@@ -31,7 +31,11 @@ func main() {
 		log.Fatalf("Error ejecutando migraciones: %v", err)
 	}
 
-	userService := service.NewUserService(dbConn)
+	userService, err := service.NewUserService(dbConn)
+	if err != nil {
+		log.Fatalf("Error creando el servicio de usuarios: %v", err)
+	}
+
 	r := transportHttp.NewRouter(userService)
 
 	port := os.Getenv("PORT")
